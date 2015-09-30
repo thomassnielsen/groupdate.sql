@@ -65,16 +65,18 @@ $$
 
 -- day
 
+DROP FUNCTION IF EXISTS gd_day(timestamptz);
 CREATE OR REPLACE FUNCTION gd_day(timestamptz)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
-  SELECT DATE_TRUNC('day', $1)::timestamptz;
+  SELECT DATE_TRUNC('day', $1)::date;
 $$
   LANGUAGE SQL STABLE;
 
 
+DROP FUNCTION IF EXISTS gd_day(timestamp);
 CREATE OR REPLACE FUNCTION gd_day(timestamp)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
   SELECT gd_day($1::timestamptz);
 $$
@@ -83,16 +85,18 @@ $$
 
 -- day w/ time zone
 
+DROP FUNCTION IF EXISTS gd_day(timestamptz, text);
 CREATE OR REPLACE FUNCTION gd_day(timestamptz, text)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
-  SELECT DATE_TRUNC('day', $1 AT TIME ZONE $2) AT TIME ZONE $2;
+  SELECT (DATE_TRUNC('day', $1 AT TIME ZONE $2) AT TIME ZONE $2)::date;
 $$
   LANGUAGE SQL STABLE;
 
 
+DROP FUNCTION IF EXISTS gd_day(timestamp, text);
 CREATE OR REPLACE FUNCTION gd_day(timestamp, text)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
   SELECT gd_day($1::timestamptz, $2);
 $$
@@ -101,16 +105,18 @@ $$
 
 -- week
 
+DROP FUNCTION IF EXISTS gd_week(timestamptz);
 CREATE OR REPLACE FUNCTION gd_week(timestamptz)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
-  SELECT DATE_TRUNC('week', ($1 + INTERVAL '1 day')) - INTERVAL '1 day';
+  SELECT (DATE_TRUNC('week', ($1 + INTERVAL '1 day')) - INTERVAL '1 day')::date;
 $$
   LANGUAGE SQL STABLE;
 
 
+DROP FUNCTION IF EXISTS gd_week(timestamp);
 CREATE OR REPLACE FUNCTION gd_week(timestamp)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
   SELECT gd_week($1::timestamptz);
 $$
@@ -119,16 +125,18 @@ $$
 
 -- week w/ time zone
 
+DROP FUNCTION IF EXISTS gd_week(timestamptz, text);
 CREATE OR REPLACE FUNCTION gd_week(timestamptz, text)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
-  SELECT (DATE_TRUNC('week', ($1 + INTERVAL '1 day') AT TIME ZONE $2) - INTERVAL '1 day') AT TIME ZONE $2;
+  SELECT ((DATE_TRUNC('week', ($1 + INTERVAL '1 day') AT TIME ZONE $2) - INTERVAL '1 day') AT TIME ZONE $2)::date;
 $$
   LANGUAGE SQL STABLE;
 
 
+DROP FUNCTION IF EXISTS gd_week(timestamp, text);
 CREATE OR REPLACE FUNCTION gd_week(timestamp, text)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
   SELECT gd_week($1::timestamptz, $2);
 $$
@@ -137,16 +145,18 @@ $$
 
 -- week starting monday
 
+DROP FUNCTION IF EXISTS gd_week_mon(timestamptz);
 CREATE OR REPLACE FUNCTION gd_week_mon(timestamptz)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
-  SELECT DATE_TRUNC('week', $1);
+  SELECT DATE_TRUNC('week', $1)::date;
 $$
   LANGUAGE SQL STABLE;
 
 
+DROP FUNCTION IF EXISTS gd_week_mon(timestamp);
 CREATE OR REPLACE FUNCTION gd_week_mon(timestamp)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
   SELECT gd_week_mon($1::timestamptz);
 $$
@@ -155,16 +165,18 @@ $$
 
 -- week w/ time zone starting monday
 
+DROP FUNCTION IF EXISTS gd_week_mon(timestamptz, text);
 CREATE OR REPLACE FUNCTION gd_week_mon(timestamptz, text)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
-  SELECT DATE_TRUNC('week', $1 AT TIME ZONE $2) AT TIME ZONE $2;
+  SELECT (DATE_TRUNC('week', $1 AT TIME ZONE $2) AT TIME ZONE $2)::date;
 $$
   LANGUAGE SQL STABLE;
 
 
+DROP FUNCTION IF EXISTS gd_week_mon(timestamp, text);
 CREATE OR REPLACE FUNCTION gd_week_mon(timestamp, text)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
   SELECT gd_week_mon($1::timestamptz, $2);
 $$
@@ -173,16 +185,18 @@ $$
 
 -- month
 
+DROP FUNCTION IF EXISTS gd_month(timestamptz);
 CREATE OR REPLACE FUNCTION gd_month(timestamptz)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
-  SELECT DATE_TRUNC('month', $1)::timestamptz;
+  SELECT DATE_TRUNC('month', $1)::date;
 $$
   LANGUAGE SQL STABLE;
 
 
+DROP FUNCTION IF EXISTS gd_month(timestamp);
 CREATE OR REPLACE FUNCTION gd_month(timestamp)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
   SELECT gd_month($1::timestamptz);
 $$
@@ -191,16 +205,18 @@ $$
 
 -- month w/ time zone
 
+DROP FUNCTION IF EXISTS gd_month(timestamptz, text);
 CREATE OR REPLACE FUNCTION gd_month(timestamptz, text)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
-  SELECT DATE_TRUNC('month', $1 AT TIME ZONE $2) AT TIME ZONE $2;
+  SELECT (DATE_TRUNC('month', $1 AT TIME ZONE $2) AT TIME ZONE $2)::date;
 $$
   LANGUAGE SQL STABLE;
 
 
+DROP FUNCTION IF EXISTS gd_month(timestamp, text);
 CREATE OR REPLACE FUNCTION gd_month(timestamp, text)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
   SELECT gd_month($1::timestamptz, $2);
 $$
@@ -209,16 +225,18 @@ $$
 
 -- year
 
+DROP FUNCTION IF EXISTS gd_year(timestamptz);
 CREATE OR REPLACE FUNCTION gd_year(timestamptz)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
-  SELECT DATE_TRUNC('year', $1)::timestamptz;
+  SELECT DATE_TRUNC('year', $1)::date;
 $$
   LANGUAGE SQL STABLE;
 
 
+DROP FUNCTION IF EXISTS gd_year(timestamp);
 CREATE OR REPLACE FUNCTION gd_year(timestamp)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
   SELECT gd_year($1::timestamptz);
 $$
@@ -227,16 +245,18 @@ $$
 
 -- year w/ time zone
 
+DROP FUNCTION IF EXISTS gd_year(timestamptz, text);
 CREATE OR REPLACE FUNCTION gd_year(timestamptz, text)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
-  SELECT DATE_TRUNC('year', $1 AT TIME ZONE $2) AT TIME ZONE $2;
+  SELECT (DATE_TRUNC('year', $1 AT TIME ZONE $2) AT TIME ZONE $2)::date;
 $$
   LANGUAGE SQL STABLE;
 
 
+DROP FUNCTION IF EXISTS gd_year(timestamp, text);
 CREATE OR REPLACE FUNCTION gd_year(timestamp, text)
-  RETURNS timestamptz AS
+  RETURNS date AS
 $$
   SELECT gd_year($1::timestamptz, $2);
 $$
